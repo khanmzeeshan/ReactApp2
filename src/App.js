@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Table from './Table';
 import Form from './Form';
+import axios from 'axios';
 //import FetchDemo from './FetchDemo'
 
 class App extends Component {
@@ -27,6 +28,19 @@ class App extends Component {
       }
     ]
   }
+  componentDidMount() {
+    axios.get('http://localhost:5000/users') //axios get request 
+    //res is API response object
+     .then(res => {
+       const characters = res.data.users_list;
+       this.setState({ characters }); //updating state triggers render
+     })
+     .catch(function (error) {
+       //Not handling the error. Just logging into the console.
+       console.log(error);
+     });
+ }
+ 
 render() {
   return (
     <div className="container">
