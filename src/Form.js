@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 
 class Form extends Component {
+  constructor(props){
+    super(props);
+  }
   initialState = {
     name: '',
     job: '',
@@ -30,7 +33,7 @@ render() {
           name="name"
           id="name"
           value={name}
-          onChange={this.handleChange} />
+          onChange={this.handleChange} /> 
         <label htmlFor="job">Job</label>
         <input
           type="text"
@@ -40,6 +43,8 @@ render() {
           onChange={this.handleChange} />
         <input type="button" value="Submit" onClick={this.submitForm} />
       </form>
+      //<h1>r/somesubReddit</h1>
+      //<u1></u1>
     );
   }
   
