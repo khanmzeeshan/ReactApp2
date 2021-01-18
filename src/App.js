@@ -4,42 +4,56 @@ import Form from './Form';
 import axios from 'axios';
 //import FetchDemo from './FetchDemo'
 
+
 class App extends Component {
-  constructor (props){
-  super(props);
+    constructor(props) {
+    super(props);
+    this.state = {
+    characters: [{ 
+      'id' : 'xyz789',
+      'name' : 'Charlie',
+      'job': 'Janitor',
+   },
+   {
+      'id' : 'abc123', 
+      'name': 'Mac',
+      'job': 'Bouncer',
+   },
+   {
+      'id' : 'ppp222', 
+      'name': 'Mac',
+      'job': 'Professor',
+   }, 
+   {
+      'id' : 'yat999', 
+      'name': 'Dee',
+      'job': 'Aspring actress',
+   },
+   {
+      'id' : 'zap555', 
+      'name': 'Dennis',
+      'job': 'Bartender',
+   },
+   {
+     "id": "qwe123",
+     "job": "Zookeeper",
+     "name": "Cindy"
+   }
+]
+    };
   }
-  state = {
-		characters: [
-      {
-        name: 'Charlie',
-        job: 'Janitor',
-      },
-      {
-        name: 'Mac',
-        job: 'Bouncer',
-      },
-      {
-        name: 'Dee',
-        job: 'Aspring actress',
-      },
-      {
-        name: 'Dennis',
-        job: 'Bartender',
-      }
-    ]
-  }
-  componentDidMount() {
-    axios.get('http://localhost:5000/users') //axios get request 
-    //res is API response object
-     .then(res => {
-       const characters = res.data.users_list;
-       this.setState({ characters }); //updating state triggers render
-     })
-     .catch(function (error) {
-       //Not handling the error. Just logging into the console.
-       console.log(error);
-     });
- }
+//  componentDidMount() {
+//    axios.get('http://localhost:5000/users') //axios get request 
+//    //res is API response object
+//     .then(res => {
+//       const characters = res.data.users_list;
+//       this.setState({ characters }); //updating state triggers render
+//     })
+//     .catch(function (error) {
+//       //Not handling the error. Just logging into the console.
+//       console.log(error);
+//     });
+// }
  
 render() {
   return (
@@ -50,22 +64,26 @@ render() {
     </div>
     // <FetchDemo subreddit= 'calpoly'></FetchDemo>
   )}
-  removeCharacter = index => {
+  //URL route: users/myID123
+  removeCharacter = id => { 
     const { characters } = this.state;
+    //need to delete with axios THEN NEEDS ;
+    //response code 200 or 204?
+    axios.delete('http://localhost:5000/users/${id}')
+    .then(result => {
+      if (result.status == 204){
+        this.setState({
+          characters: characters.filter((character, i) => {
+            return character.id !== id}),
+        })
+      }
+    });
     
-    this.setState({
-      characters: characters.filter((character, i) => {
-        return i !== index;
-      }),
-    })
   }
   handleSubmit = character => {
-    this.makePostCall(character).then( callResult => {
-       if (callResult === true) {
-          this.setState({ characters: [...this.state.characters, character] });
-       }
-    });
+    this.setState({ characters: [...this.state.characters, character] })
   }
+
   //Only update table if POST call is successful
   makePostCall(character){
     return axios.post('http://localhost:5000/users', character)
