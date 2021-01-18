@@ -6,13 +6,13 @@ class Form extends Component {
   }
   initialState = {
     name: '',
-    job: '',
+    job: ''
   };
 
   state = this.initialState;
 
 handleChange = event => {
-    const { name, value } = event.target
+    const { name, value, id } = event.target
   
     this.setState({
       [name]: value,
@@ -23,7 +23,7 @@ submitForm = () => {
     this.setState(this.initialState)
   }
 render() {
-    const { name, job } = this.state;
+    const { name, job, id } = this.state;
   
     return (
       <form>

@@ -55,15 +55,7 @@ class App extends Component {
 //     });
 // }
  
-render() {
-  return (
-    <div className="container">
-      <Table characterData={this.state.characters} removeCharacter={this.removeCharacter} />
-      <Form handleSubmit={this.handleSubmit} />;
-      
-    </div>
-    // <FetchDemo subreddit= 'calpoly'></FetchDemo>
-  )}
+
   //URL route: users/myID123
   removeCharacter = id => { 
     const { characters } = this.state;
@@ -71,7 +63,7 @@ render() {
     //response code 200 or 204?
     axios.delete('http://localhost:5000/users/${id}')
     .then(result => {
-      if (result.status == 204){
+      if (result.status){
         this.setState({
           characters: characters.filter((character, i) => {
             return character.id !== id}),
@@ -96,6 +88,15 @@ render() {
        return false;
      });
   }
+  render() {
+    return (
+      <div className="container">
+        <Table characterData={this.state.characters} removeCharacter={this.removeCharacter} />
+        <Form handleSubmit={this.handleSubmit} />;
+        
+      </div>
+      // <FetchDemo subreddit= 'calpoly'></FetchDemo>
+    )}
 
 //handleSubmit = character => {
   //const char_copy = this.state.character.slice();
