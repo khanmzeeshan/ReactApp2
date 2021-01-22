@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
 class Form extends Component {
-  constructor(props){
-    super(props);
-  }
+  //constructor(props){
+  //  super(props);
+  //}
   initialState = {
     name: '',
     job: ''
@@ -12,7 +12,7 @@ class Form extends Component {
   state = this.initialState;
 
 handleChange = event => {
-    const { name, value, id } = event.target
+    const { name, value } = event.target
   
     this.setState({
       [name]: value,
@@ -23,7 +23,7 @@ submitForm = () => {
     this.setState(this.initialState)
   }
 render() {
-    const { name, job, id } = this.state;
+    const { name, job } = this.state;
   
     return (
       <form>
