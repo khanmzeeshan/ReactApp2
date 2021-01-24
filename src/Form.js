@@ -6,7 +6,8 @@ class Form extends Component {
   //}
   initialState = {
     name: '',
-    job: ''
+    job: '',
+    id: '',
   };
 
   state = this.initialState;

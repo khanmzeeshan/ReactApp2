@@ -31,7 +31,7 @@ componentDidMount() {
     //response code 200 or 204?
     axios.delete('http://localhost:5000/users/')
     .then(result => {
-      if (result.status){
+      if (result.status==201){
         this.setState({
           characters: characters.filter((character, i) => {
             return i !== index}),
@@ -40,22 +40,30 @@ componentDidMount() {
     });
     
   }
+  //request and take response.data and then pass through as the user attribute
   handleSubmit = character => {
-    this.setState({ characters: [...this.state.characters, character] })
+    this.makePostCall(character).then(result => {
+      if (result !== false) {
+        this.setState({ characters: [...this.state.characters, result] })
+      }
+    })
   }
 
   //Only update table if POST call is successful
-  //makePostCall(character){
-  //  return axios.post('http://localhost:5000/users', character)
-  //   .then(function (response) {
-  //     console.log(response);
-  //     return (response.data);
-  //   })
-  //   .catch(function (error) {
-  //     console.log(error);
-  //     return false;
-  //   });
-  //}
+  makePostCall(character){
+    
+    return axios.post('http://localhost:5000/users/', character)
+     .then(function (response) {
+       console.log(response);
+       if(response.status == 200){
+        return (response.data);
+       }
+     })
+     .catch(function (error) {
+       console.log(error);
+       return false;
+     });
+  }
   render() {
   
     return (
